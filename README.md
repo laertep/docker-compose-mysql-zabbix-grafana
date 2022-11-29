@@ -1,6 +1,6 @@
-# Projeto - docker-compose-mysql-zabbix-grafana
+## Projeto - docker-compose-mysql-zabbix-grafana
 
-* Instalação do Zabbix-server em 03 camadas:
+** Instalação do Zabbix-server em 03 camadas:
 
 * Instalação do mysql server para absorver o zabbix-server com adição dos hosts;
 * Instalação do zabbix-server com dependência do mysql;
