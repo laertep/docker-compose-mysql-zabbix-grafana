@@ -21,6 +21,8 @@ services:
     image: zabbix/zabbix-server-mysql:ubuntu-5.0.1
     networks:
       - vpcdesafio07
+    links:
+      - mysql
     restart: always
     ports:
       - '10050:10050'
@@ -41,6 +43,8 @@ services:
     image: zabbix/zabbix-web-apache-mysql:ubuntu-5.0.1
     networks:
      - vpcdesafio07
+    links:
+     - mysql
     restart: always
     ports:
      - '8010:8080'
@@ -55,29 +59,29 @@ services:
      - mysql
 
   grafana:
-    image: grafana/grafana:latest
     container_name: grafana
-    user: 'root'
-    environment:
-      - GF_INSTALL_PLUGINS=alexanderzobnin-zabbix-app,raintank-worldping-app
-    volumes:
-      - './grafana-config:/etc/grafana:rw'
-      - './grafana-data:/var/lib/grafana:rw'
-      - './grafana-home:/usr/share/grafana:rw'
-    ports:
-      - '3000:3000'
-    depends_on:
-      - zabbix-server
+    image: grafana/grafana
     networks:
       - vpcdesafio07
+    links:
+      - mysql
+      - zabbix-server
+    ports:
+      - '3000:3000'
+    
+    environment:
+      - GF_INSTALL_PLUGINS=alexanderzobnin-zabbix-app
+        
+    depends_on:
+      - mysql
+      - zabbix-server
+   
 
 
 volumes:
   bd-mysql:
   zabbix-alertscripts:
-  grafana-config:
-  grafana-data:
-  grafana-home:
+  
 
 networks:
   vpcdesafio07:
