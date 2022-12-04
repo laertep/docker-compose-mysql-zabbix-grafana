@@ -60,12 +60,15 @@ services:
 
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: grafana/grafana:latest
     networks:
       - vpcdesafio07
     links:
       - mysql
       - zabbix-server
+    volumes:
+      - './grafana:/var/lib/grafana'
+      - './grafana:/usr/share/grafana/public/dashboards'
     ports:
       - '3000:3000'
     
@@ -75,13 +78,14 @@ services:
     depends_on:
       - mysql
       - zabbix-server
+     
    
 
 
 volumes:
   bd-mysql:
   zabbix-alertscripts:
-  
+  grafana:
 
 networks:
   vpcdesafio07:
